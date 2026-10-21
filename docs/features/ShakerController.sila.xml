@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Feature SiLA2Version="1.1" FeatureVersion="1.0" Originator="com.gitlab.heingroup" Category="shaking"
+         xmlns="http://www.sila-standard.org"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.sila-standard.org https://gitlab.com/SiLA2/sila_base/raw/master/schema/FeatureDefinition.xsd">
+  <Identifier>ShakerController</Identifier>
+  <DisplayName>Shaker Controller</DisplayName>
+  <Description>
+    Controls the orbital shaking of the thermoshaker.
+
+    Shaking runs until it is stopped; it has no natural end. Start sets the speed set
+    point and starts the
+    motor in one call, so a client never has to remember a previously set value. The
+    device ramps to the set
+    point within a few seconds; follow Speed to see when it is reached. Speed and
+    temperature control are
+    independent: this feature never changes the temperature.
+
+    The instrument accepts set points in 10 rpm steps and regulates from 300 rpm upwards;
+    a set point below
+    that is left to the firmware, which may clamp it. A set point of 0 with the motor
+    running lets the
+    platform coast to a standstill.
+  </Description>
+  <Command>
+    <Identifier>Start</Identifier>
+    <DisplayName>Start</DisplayName>
+    <Description>
+      Set the speed set point and start the motor.
+
+      Calling Start while already shaking only changes the set point; the motor keeps
+      running.
+    </Description>
+    <Observable>No</Observable>
+    <Parameter>
+      <Identifier>TargetSpeed</Identifier>
+      <DisplayName>Target Speed</DisplayName>
+      <Description>The speed the platform should shake at.</Description>
+      <DataType>
+        <Constrained>
+          <DataType>
+            <Basic>Integer</Basic>
+          </DataType>
+          <Constraints>
+            <Unit>
+              <Label>rpm</Label>
+              <Factor>0.016666666666666666</Factor>
+              <Offset>0</Offset>
+              <UnitComponent>
+                <SIUnit>Second</SIUnit>
+                <Exponent>-1</Exponent>
+              </UnitComponent>
+            </Unit>
+            <MinimalInclusive>0</MinimalInclusive>
+            <MaximalInclusive>3000</MaximalInclusive>
+          </Constraints>
+        </Constrained>
+      </DataType>
+    </Parameter>
+  </Command>
+  <Command>
+    <Identifier>Stop</Identifier>
+    <DisplayName>Stop</DisplayName>
+    <Description>
+      Stop the motor. The platform coasts to a standstill; the set point is kept. Safe to
+      call when stopped.
+    </Description>
+    <Observable>No</Observable>
+  </Command>
+  <Property>
+    <Identifier>Speed</Identifier>
+    <DisplayName>Speed</DisplayName>
+    <Description>Subscribe to the shaking speed currently measured by the device.</Description>
+    <Observable>Yes</Observable>
+    <DataType>
+      <Constrained>
+        <DataType>
+          <Basic>Integer</Basic>
+        </DataType>
+        <Constraints>
+          <Unit>
+            <Label>rpm</Label>
+            <Factor>0.016666666666666666</Factor>
+            <Offset>0</Offset>
+            <UnitComponent>
+              <SIUnit>Second</SIUnit>
+              <Exponent>-1</Exponent>
+            </UnitComponent>
+          </Unit>
+          <MinimalInclusive>0</MinimalInclusive>
+          <MaximalInclusive>3000</MaximalInclusive>
+        </Constraints>
+      </Constrained>
+    </DataType>
+  </Property>
+  <Property>
+    <Identifier>TargetSpeed</Identifier>
+    <DisplayName>Target Speed</DisplayName>
+    <Description>Subscribe to the speed set point the device regulates to while the motor runs.</Description>
+    <Observable>Yes</Observable>
+    <DataType>
+      <Constrained>
+        <DataType>
+          <Basic>Integer</Basic>
+        </DataType>
+        <Constraints>
+          <Unit>
+            <Label>rpm</Label>
+            <Factor>0.016666666666666666</Factor>
+            <Offset>0</Offset>
+            <UnitComponent>
+              <SIUnit>Second</SIUnit>
+              <Exponent>-1</Exponent>
+            </UnitComponent>
+          </Unit>
+          <MinimalInclusive>0</MinimalInclusive>
+          <MaximalInclusive>3000</MaximalInclusive>
+        </Constraints>
+      </Constrained>
+    </DataType>
+  </Property>
+</Feature>

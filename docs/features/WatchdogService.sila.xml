@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Feature SiLA2Version="1.1" FeatureVersion="1.0" Originator="com.gitlab.heingroup" Category="safety"
+         xmlns="http://www.sila-standard.org"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.sila-standard.org https://gitlab.com/SiLA2/sila_base/raw/master/schema/FeatureDefinition.xsd">
+  <Identifier>WatchdogService</Identifier>
+  <DisplayName>Watchdog Service</DisplayName>
+  <Description>
+    Arms the instrument&apos;s communication watchdog so an unattended run fails safe.
+
+    Once armed, the device expects this server to repeat the watchdog command within the
+    chosen timeout.
+    The server does that automatically for as long as it runs. If the server, the computer
+    or the cable fails,
+    the device reacts on its own: in &quot;switch off&quot; mode it stops temperature
+    control and the motor, in
+    &quot;safety values&quot; mode it jumps to the safety temperature and safety speed.
+    Either way the display shows
+    Error 2 until Stop is called, which also returns the device to normal operation.
+
+    Set the safety values before arming &quot;safety values&quot; mode; the device cannot
+    report them back.
+  </Description>
+  <Command>
+    <Identifier>SetSafetySpeed</Identifier>
+    <DisplayName>Set Safety Speed</DisplayName>
+    <Description>Set the speed the device falls back to in SafetyValues mode.</Description>
+    <Observable>No</Observable>
+    <Parameter>
+      <Identifier>SafetySpeed</Identifier>
+      <DisplayName>Safety Speed</DisplayName>
+      <Description>The fallback speed set point.</Description>
+      <DataType>
+        <Constrained>
+          <DataType>
+            <Basic>Integer</Basic>
+          </DataType>
+          <Constraints>
+            <Unit>
+              <Label>rpm</Label>
+              <Factor>0.016666666666666666</Factor>
+              <Offset>0</Offset>
+              <UnitComponent>
+                <SIUnit>Second</SIUnit>
+                <Exponent>-1</Exponent>
+              </UnitComponent>
+            </Unit>
+            <MinimalInclusive>0</MinimalInclusive>
+            <MaximalInclusive>3000</MaximalInclusive>
+          </Constraints>
+        </Constrained>
+      </DataType>
+    </Parameter>
+  </Command>
+  <Command>
+    <Identifier>SetSafetyTemperature</Identifier>
+    <DisplayName>Set Safety Temperature</DisplayName>
+    <Description>Set the temperature the device falls back to in SafetyValues mode.</Description>
+    <Observable>No</Observable>
+    <Parameter>
+      <Identifier>SafetyTemperature</Identifier>
+      <DisplayName>Safety Temperature</DisplayName>
+      <Description>The fallback temperature set point.</Description>
+      <DataType>
+        <Constrained>
+          <DataType>
+            <Basic>Real</Basic>
+          </DataType>
+          <Constraints>
+            <Unit>
+              <Label>°C</Label>
+              <Factor>1</Factor>
+              <Offset>273.15</Offset>
+              <UnitComponent>
+                <SIUnit>Kelvin</SIUnit>
+                <Exponent>1</Exponent>
+              </UnitComponent>
+            </Unit>
+            <MinimalInclusive>1</MinimalInclusive>
+            <MaximalInclusive>100</MaximalInclusive>
+          </Constraints>
+        </Constrained>
+      </DataType>
+    </Parameter>
+  </Command>
+  <Command>
+    <Identifier>Start</Identifier>
+    <DisplayName>Start</DisplayName>
+    <Description>
+      Arm the watchdog and start feeding it.
+
+      Calling Start while armed replaces the mode and timeout.
+    </Description>
+    <Observable>No</Observable>
+    <Parameter>
+      <Identifier>Mode</Identifier>
+      <DisplayName>Mode</DisplayName>
+      <Description>
+        What the device does when the feed stops: &quot;switch off&quot; stops heating and
+        shaking, &quot;safety
+        values&quot; jumps to the safety set points.
+      </Description>
+      <DataType>
+        <Constrained>
+          <DataType>
+            <Basic>String</Basic>
+          </DataType>
+          <Constraints>
+            <Set>
+              <Value>switch off</Value>
+              <Value>safety values</Value>
+            </Set>
+          </Constraints>
+        </Constrained>
+      </DataType>
+    </Parameter>
+    <Parameter>
+      <Identifier>Timeout</Identifier>
+      <DisplayName>Timeout</DisplayName>
+      <Description>How long the device waits for the next feed before reacting.</Description>
+      <DataType>
+        <Constrained>
+          <DataType>
+            <Basic>Integer</Basic>
+          </DataType>
+          <Constraints>
+            <Unit>
+              <Label>s</Label>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <UnitComponent>
+                <SIUnit>Second</SIUnit>
+                <Exponent>1</Exponent>
+              </UnitComponent>
+            </Unit>
+            <MinimalInclusive>20</MinimalInclusive>
+            <MaximalInclusive>1500</MaximalInclusive>
+          </Constraints>
+        </Constrained>
+      </DataType>
+    </Parameter>
+  </Command>
+  <Command>
+    <Identifier>Stop</Identifier>
+    <DisplayName>Stop</DisplayName>
+    <Description>
+      Stop feeding the watchdog and return the device to normal operation, clearing Error 2
+      if shown.
+    </Description>
+    <Observable>No</Observable>
+  </Command>
+  <Property>
+    <Identifier>State</Identifier>
+    <DisplayName>State</DisplayName>
+    <Description>
+      Get the watchdog mode this server is keeping alive. Reflects this server&apos;s
+      actions, not a device query.
+    </Description>
+    <Observable>No</Observable>
+    <DataType>
+      <Constrained>
+        <DataType>
+          <Basic>String</Basic>
+        </DataType>
+        <Constraints>
+          <Set>
+            <Value>inactive</Value>
+            <Value>switch off</Value>
+            <Value>safety values</Value>
+          </Set>
+        </Constraints>
+      </Constrained>
+    </DataType>
+  </Property>
+</Feature>

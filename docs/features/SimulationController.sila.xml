@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Feature SiLA2Version="1.1" FeatureVersion="1.0" MaturityLevel="Verified" Originator="org.silastandard" Category="core"
+         xmlns="http://www.sila-standard.org"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.sila-standard.org https://gitlab.com/SiLA2/sila_base/raw/master/schema/FeatureDefinition.xsd">
+  <Identifier>SimulationController</Identifier>
+  <DisplayName>Simulation Controller</DisplayName>
+  <Description>
+    Switches the connector between the simulated thermoshaker and the real one on the
+    configured serial port.
+  </Description>
+  <Command>
+    <Identifier>StartRealMode</Identifier>
+    <DisplayName>Start Real Mode</DisplayName>
+    <Description></Description>
+    <Observable>No</Observable>
+  </Command>
+  <Command>
+    <Identifier>StartSimulationMode</Identifier>
+    <DisplayName>Start Simulation Mode</DisplayName>
+    <Description></Description>
+    <Observable>No</Observable>
+  </Command>
+  <Property>
+    <Identifier>SimulationMode</Identifier>
+    <DisplayName>SimulationMode</DisplayName>
+    <Description></Description>
+    <Observable>No</Observable>
+    <DataType>
+      <Basic>Boolean</Basic>
+    </DataType>
+  </Property>
+</Feature>

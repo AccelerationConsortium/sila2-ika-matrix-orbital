@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Feature SiLA2Version="1.1" FeatureVersion="1.0" Originator="com.gitlab.heingroup" Category="information"
+         xmlns="http://www.sila-standard.org"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.sila-standard.org https://gitlab.com/SiLA2/sila_base/raw/master/schema/FeatureDefinition.xsd">
+  <Identifier>DeviceInformationProvider</Identifier>
+  <DisplayName>Device Information Provider</DisplayName>
+  <Description>Reports the software identification of the connected thermoshaker.</Description>
+  <Property>
+    <Identifier>SoftwareIdentifier</Identifier>
+    <DisplayName>Software Identifier</DisplayName>
+    <Description>
+      Get the software identification string reported by the device, which includes its
+      version.
+    </Description>
+    <Observable>No</Observable>
+    <DataType>
+      <Basic>String</Basic>
+    </DataType>
+  </Property>
+  <Property>
+    <Identifier>SoftwareVersion</Identifier>
+    <DisplayName>Software Version</DisplayName>
+    <Description>Get the firmware version reported by the device.</Description>
+    <Observable>No</Observable>
+    <DataType>
+      <Basic>String</Basic>
+    </DataType>
+  </Property>
+</Feature>

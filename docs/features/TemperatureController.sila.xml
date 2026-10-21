@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Feature SiLA2Version="1.1" FeatureVersion="1.0" Originator="com.gitlab.heingroup" Category="temperature"
+         xmlns="http://www.sila-standard.org"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.sila-standard.org https://gitlab.com/SiLA2/sila_base/raw/master/schema/FeatureDefinition.xsd">
+  <Identifier>TemperatureController</Identifier>
+  <DisplayName>Temperature Controller</DisplayName>
+  <Description>
+    Controls the temperature of the sample holder.
+
+    The thermoshaker both heats (up to 100 °C) and cools (down to about 15 K below
+    ambient), so one Start
+    command covers both directions. Temperature control runs until stopped; reaching the
+    set point can take
+    minutes, so follow Temperature rather than waiting on the command. The device rounds
+    set points to whole
+    degrees. Temperature control and shaking are independent: this feature never changes
+    the motor.
+  </Description>
+  <Command>
+    <Identifier>Start</Identifier>
+    <DisplayName>Start</DisplayName>
+    <Description>
+      Set the temperature set point and switch temperature control on.
+
+      Calling Start while control is already on only changes the set point.
+    </Description>
+    <Observable>No</Observable>
+    <Parameter>
+      <Identifier>TargetTemperature</Identifier>
+      <DisplayName>Target Temperature</DisplayName>
+      <Description>The temperature the sample holder should be regulated to.</Description>
+      <DataType>
+        <Constrained>
+          <DataType>
+            <Basic>Real</Basic>
+          </DataType>
+          <Constraints>
+            <Unit>
+              <Label>°C</Label>
+              <Factor>1</Factor>
+              <Offset>273.15</Offset>
+              <UnitComponent>
+                <SIUnit>Kelvin</SIUnit>
+                <Exponent>1</Exponent>
+              </UnitComponent>
+            </Unit>
+            <MinimalInclusive>1</MinimalInclusive>
+            <MaximalInclusive>100</MaximalInclusive>
+          </Constraints>
+        </Constrained>
+      </DataType>
+    </Parameter>
+  </Command>
+  <Command>
+    <Identifier>Stop</Identifier>
+    <DisplayName>Stop</DisplayName>
+    <Description>
+      Switch temperature control off. The holder drifts back to ambient. Safe to call when
+      already off.
+    </Description>
+    <Observable>No</Observable>
+  </Command>
+  <Property>
+    <Identifier>TargetTemperature</Identifier>
+    <DisplayName>Target Temperature</DisplayName>
+    <Description>
+      Subscribe to the temperature set point the device regulates to while temperature
+      control is on.
+    </Description>
+    <Observable>Yes</Observable>
+    <DataType>
+      <Constrained>
+        <DataType>
+          <Basic>Real</Basic>
+        </DataType>
+        <Constraints>
+          <Unit>
+            <Label>°C</Label>
+            <Factor>1</Factor>
+            <Offset>273.15</Offset>
+            <UnitComponent>
+              <SIUnit>Kelvin</SIUnit>
+              <Exponent>1</Exponent>
+            </UnitComponent>
+          </Unit>
+          <MinimalInclusive>1</MinimalInclusive>
+          <MaximalInclusive>100</MaximalInclusive>
+        </Constraints>
+      </Constrained>
+    </DataType>
+  </Property>
+  <Property>
+    <Identifier>Temperature</Identifier>
+    <DisplayName>Temperature</DisplayName>
+    <Description>Subscribe to the temperature currently measured at the sample holder.</Description>
+    <Observable>Yes</Observable>
+    <DataType>
+      <Constrained>
+        <DataType>
+          <Basic>Real</Basic>
+        </DataType>
+        <Constraints>
+          <Unit>
+            <Label>°C</Label>
+            <Factor>1</Factor>
+            <Offset>273.15</Offset>
+            <UnitComponent>
+              <SIUnit>Kelvin</SIUnit>
+              <Exponent>1</Exponent>
+            </UnitComponent>
+          </Unit>
+        </Constraints>
+      </Constrained>
+    </DataType>
+  </Property>
+</Feature>
